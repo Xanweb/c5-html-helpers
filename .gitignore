@@ -10,7 +10,6 @@ __MACOSX
 
 # ignore node files
 /node_modules/
-/mix-manifest.json
 
 # ignore composer files
 composer.phar
