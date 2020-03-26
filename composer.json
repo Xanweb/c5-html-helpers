@@ -21,6 +21,6 @@
         }
     },
     "support": {
-        "source": "https://gitlab.xanium.io/php-libraries/c5-html-helpers"
+        "source": "https://github.com/Xanweb/c5-html-helpers"
     }
 }
