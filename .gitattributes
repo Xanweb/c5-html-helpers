@@ -1,9 +1,6 @@
 * text=auto
 
-/package-lock.json -diff
+/build/package-lock.json -diff
 
 /.* export-ignore
-/css/scss/*.scss export-ignore
-/package.json export-ignore
-/package-lock.json export-ignore
-/webpack.mix.js export-ignore
+/build export-ignore
