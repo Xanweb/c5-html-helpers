@@ -1,3 +1,6 @@
+# ignore node files
+/build/node_modules/
+
 # ignore composer files
 composer.lock
 /vendor/
