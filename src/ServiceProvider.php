@@ -1,4 +1,5 @@
 <?php
+
 namespace Xanweb\HtmlHelper;
 
 use Concrete\Core\Foundation\Service\Provider as CoreServiceProvider;

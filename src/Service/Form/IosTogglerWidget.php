@@ -12,9 +12,6 @@ class IosTogglerWidget
      */
     protected $form;
 
-    /**
-     * @param Form $form
-     */
     public function __construct(Form $form)
     {
         $this->form = $form;
@@ -36,7 +33,7 @@ class IosTogglerWidget
      * @param string $isChecked "Checked" value (subject to be overridden by $_REQUEST). Checkbox is checked if value is true (string). Note that 'false' (string) evaluates to true (boolean)!
      * @param array $miscFields additional fields appended to the element (a hash array of attributes name => value), possibly including 'class'
      */
-    public function output($key, $value, $isChecked = false, $miscFields = [])
+    public function output($key, $value, $isChecked = false, $miscFields = []): void
     {
         $view = View::getInstance();
         $view->requireAsset('vendor-css', 'dashboard/ios/toggler');

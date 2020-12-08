@@ -1,26 +1,33 @@
 {
-    "name": "xanweb/c5-html-helpers",
-    "description": "Concrete5 HTML Helpers",
-    "keywords": ["concrete5", "concrete5-v8", "concrete5-library"],
-    "type": "library",
-    "license": "proprietary",
-    "require": {
-        "php": ">=7.2",
-        "xanweb/c5-ext-asset": "^1.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Xanweb\\HtmlHelper\\": "src/"
-        }
-    },
-    "extra" : {
-        "concrete5" : {
-            "providers" : [
-                "Xanweb\\HtmlHelper\\ServiceProvider"
-            ]
-        }
-    },
-    "support": {
-        "source": "https://github.com/Xanweb/c5-html-helpers"
+  "name": "xanweb/c5-html-helpers",
+  "description": "Concrete5 HTML Helpers",
+  "keywords": [
+    "concrete5",
+    "concrete5-v8",
+    "concrete5-library"
+  ],
+  "type": "library",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "xanweb/c5-ext-asset": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xanweb\\HtmlHelper\\": "src/"
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "1.x-dev"
+    },
+    "concrete5": {
+      "providers": [
+        "Xanweb\\HtmlHelper\\ServiceProvider"
+      ]
+    }
+  },
+  "support": {
+    "source": "https://github.com/Xanweb/c5-html-helpers"
+  }
 }
