@@ -104,7 +104,7 @@ class HtmlBuilder
      * Generate a HTML link to a named route.
      *
      * @param string $name
-     * @param string $title
+     * @param string|null $title
      * @param array $parameters
      * @param array $attributes
      *
@@ -121,7 +121,7 @@ class HtmlBuilder
      * Generate a HTML link to a controller action.
      *
      * @param string $action
-     * @param string $title
+     * @param string|null $title
      * @param array $parameters
      * @param array $attributes
      *

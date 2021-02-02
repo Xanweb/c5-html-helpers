@@ -16,6 +16,7 @@ class IosTogglerWidget
     {
         $this->form = $form;
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         VendorAssetManager::register(
             'vendor-css',
             'dashboard/ios/toggler',
