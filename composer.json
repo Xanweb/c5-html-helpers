@@ -10,6 +10,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "xanweb/c5-common": "^1.0",
     "xanweb/c5-ext-asset": "^1.0"
   },
   "autoload": {

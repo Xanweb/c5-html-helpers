@@ -2,11 +2,11 @@
 
 namespace Xanweb\HtmlHelper;
 
-use Concrete\Core\Foundation\Service\Provider as CoreServiceProvider;
+use Xanweb\Common\Service\Provider as FoundationServiceProvider;
 
-class ServiceProvider extends CoreServiceProvider
+class ServiceProvider extends FoundationServiceProvider
 {
-    public function register(): void
+    public function _register(): void
     {
         $this->app->singleton('helper/form/ios_toggler', function ($app) {
             return new Service\Form\IosTogglerWidget($app['helper/form']);
