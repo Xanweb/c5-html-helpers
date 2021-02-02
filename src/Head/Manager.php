@@ -18,7 +18,7 @@ class Manager implements ApplicationAwareInterface
     protected $metaTags = [];
 
     /**
-     * @var FaviconLinkTag[]
+     * @var LinkTag[]
      */
     protected $linkTags;
 
@@ -31,8 +31,8 @@ class Manager implements ApplicationAwareInterface
      */
     public function registerBaseFavicon(string $favIconURL): self
     {
-        $this->registerHeaderTag(new FaviconLinkTag('shortcut icon', 'image/x-icon', $favIconURL), 'shortcut icon');
-        $this->registerHeaderTag(new FaviconLinkTag('icon' ,'image/x-icon', $favIconURL), 'icon');
+        $this->registerHeadTag(new FaviconLinkTag('shortcut icon', 'image/x-icon', $favIconURL), 'shortcut icon');
+        $this->registerHeadTag(new FaviconLinkTag('icon' , 'image/x-icon', $favIconURL), 'icon');
 
         return $this;
     }
@@ -47,7 +47,7 @@ class Manager implements ApplicationAwareInterface
      */
     public function registerFavicon(string $favIconURL, string $sizes): self
     {
-        return $this->registerHeaderTag(new FaviconLinkTag('icon', 'image/png', $favIconURL, $sizes), "icon-$sizes");
+        return $this->registerHeadTag(new FaviconLinkTag('icon', 'image/png', $favIconURL, $sizes), "icon-$sizes");
     }
 
     /**
@@ -61,7 +61,7 @@ class Manager implements ApplicationAwareInterface
     public function registerAppleTouchIcon(string $appleIconURL, ?string $sizes = null): self
     {
         $key = $sizes ? "apple-touch-icon-$sizes" : 'apple-touch-icon';
-        return $this->registerHeaderTag(new FaviconLinkTag('apple-touch-icon', null, $appleIconURL, $sizes), $key);
+        return $this->registerHeadTag(new FaviconLinkTag('apple-touch-icon', null, $appleIconURL, $sizes), $key);
     }
 
     /**
@@ -75,7 +75,7 @@ class Manager implements ApplicationAwareInterface
     public function registerPreComposedAppleTouchIcon(string $appleIconURL, ?string $sizes = null): self
     {
         $key = $sizes ? "apple-touch-icon-precomposed-$sizes" : 'apple-touch-icon-precomposed';
-        return $this->registerHeaderTag(new FaviconLinkTag('apple-touch-icon-precomposed', null, $appleIconURL, $sizes), $key);
+        return $this->registerHeadTag(new FaviconLinkTag('apple-touch-icon-precomposed', null, $appleIconURL, $sizes), $key);
     }
 
     /**
@@ -89,8 +89,8 @@ class Manager implements ApplicationAwareInterface
     {
         $site = $this->app['site']->getSite();
         $siteName = ($site !== null) ? tc('SiteName', $site->getSiteName()) : '';
-        $this->registerHeaderTag(new MetaTag('msapplication-config', $xmlFile), 'msapplication-config');
-        $this->registerHeaderTag(new MetaTag('application-name', $siteName), 'msapplication-config');
+        $this->registerHeadTag(new MetaTag('msapplication-config', $xmlFile), 'msapplication-config');
+        $this->registerHeadTag(new MetaTag('application-name', $siteName), 'msapplication-config');
 
         return $this;
     }
@@ -105,7 +105,7 @@ class Manager implements ApplicationAwareInterface
      */
     public function registerManifestFile(string $manifestFilePath): self
     {
-        return $this->registerHeaderTag(new FaviconLinkTag('manifest', null, $manifestFilePath), 'manifest');
+        return $this->registerHeadTag(new FaviconLinkTag('manifest', null, $manifestFilePath), 'manifest');
     }
 
     /**
@@ -117,10 +117,10 @@ class Manager implements ApplicationAwareInterface
      */
     public function registerBrowserToolbarColor(string $color): self
     {
-        return $this->registerHeaderTag(new MetaTag('theme-color', $color), 'browserToolbarColor');
+        return $this->registerHeadTag(new MetaTag('theme-color', $color), 'browserToolbarColor');
     }
 
-    public function registerHeaderTag(HeadTag $headerTag, string $key = ''): self
+    public function registerHeadTag(HeadTag $headerTag, string $key = ''): self
     {
         if (empty($key)) {
             $key = Str::quickRandom(8);
@@ -128,7 +128,7 @@ class Manager implements ApplicationAwareInterface
 
         if ($headerTag instanceof MetaTag) {
             $this->metaTags[$key] = (string) $headerTag;
-        } elseif ($headerTag instanceof FaviconLinkTag) {
+        } elseif ($headerTag instanceof LinkTag) {
             $this->linkTags[$key] = (string) $headerTag;
         }
 
@@ -140,7 +140,7 @@ class Manager implements ApplicationAwareInterface
      *
      * @param callable $register
      */
-    public function register(callable $register): void
+    public function setup(callable $register): void
     {
         $this->app['director']->addListener('on_header_required_ready', function (GenericEvent $evt) use ($register) {
             $register($this);

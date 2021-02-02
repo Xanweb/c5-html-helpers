@@ -2,24 +2,10 @@
 
 namespace Xanweb\HtmlHelper\Head;
 
-use HtmlObject\Traits\Tag as HtmlObjectTag;
-
-class FaviconLinkTag extends HtmlObjectTag implements Tag
+class FaviconLinkTag extends LinkTag
 {
     /**
-     * {@inheritdoc}
-     */
-    protected $element = 'link';
-
-    /**
-     * Whether the element is self closing.
-     *
-     * @var bool
-     */
-    protected $isSelfClosing = true;
-
-    /**
-     * Create a new Link.
+     * Favicon Link Tag Constructor.
      *
      * @param string|null $rel Eg. "apple-touch-icon" / "icon" / "manifest" / "shortcut icon"...
      * @param string|null $type Link type ("image/x-icon" "image/png")
@@ -28,14 +14,11 @@ class FaviconLinkTag extends HtmlObjectTag implements Tag
      */
     public function __construct(?string $rel = null, ?string $type = null, ?string $href = '#', ?string $sizes = null)
     {
-        $attributes = [];
-        foreach (['rel', 'type', 'href', 'sizes'] as $k) {
-            if (${$k} !== null) {
-                $attributes[$k] = ${$k};
-            }
-        }
+        parent::__construct($rel, $type, $href);
 
-        $this->setAttributes($attributes);
+        if ($sizes !== null) {
+            $this->setAttribute('sizes', $sizes);
+        }
     }
 
     /**
