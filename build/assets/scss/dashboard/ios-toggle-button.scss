@@ -27,7 +27,7 @@ $ios-toggle-active-color:   #27A1CA;
                 padding: 2px;
                 width: 60px;
                 height: 28px;
-                background-color: $ios-toggle-inactive-color;
+                background-color: var(--xw-ios-toggle-inactive-color, $ios-toggle-inactive-color);
                 border-radius: 60px;
                 transition: background 0.4s;
                 &:before, &:after {
@@ -51,17 +51,17 @@ $ios-toggle-active-color:   #27A1CA;
                     left: 4px;
                     bottom: 4px;
                     width: 20px;
-                    background-color: $ios-toggle-inactive-color;
+                    background-color: var(--xw-ios-toggle-inactive-color, $ios-toggle-inactive-color);
                     border-radius: 52px;
                     transition: margin 0.4s, background 0.4s;
                 }
             }
 
             &:checked + label {
-                background-color: $ios-toggle-active-color;
+                background-color: var(--xw-ios-toggle-active-color, $ios-toggle-active-color);
                 &:after {
                     margin-left: 32px;
-                    background-color: $ios-toggle-active-color;
+                    background-color: var(--xw-ios-toggle-active-color, $ios-toggle-active-color);
                 }
             }
         }
