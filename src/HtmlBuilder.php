@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanweb\HtmlHelper\HTML;
+namespace Xanweb\HtmlHelper;
 
 use Concrete\Core\View\View;
 use HtmlObject\Element;
