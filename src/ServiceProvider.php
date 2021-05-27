@@ -3,7 +3,7 @@
 namespace Xanweb\HtmlHelper;
 
 use Xanweb\Common\Service\Provider as FoundationServiceProvider;
-use Xanweb\HtmlHelper\Service\Form\Form;
+use Xanweb\HtmlHelper\Service\Form;
 
 class ServiceProvider extends FoundationServiceProvider
 {
