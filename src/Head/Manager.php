@@ -8,6 +8,10 @@ use Illuminate\Support\Str;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Xanweb\HtmlHelper\Head\Tag as HeadTag;
 
+/**
+ * WORK IN PROGRESS
+ * @internal
+ */
 class Manager implements ApplicationAwareInterface
 {
     use ApplicationAwareTrait;
