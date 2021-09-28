@@ -2,8 +2,6 @@
 
 namespace Xanweb\HtmlHelper\Head;
 
-use Concrete\Core\Application\ApplicationAwareInterface;
-use Concrete\Core\Application\ApplicationAwareTrait;
 use Illuminate\Support\Str;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Xanweb\HtmlHelper\Head\Tag as HeadTag;
@@ -11,10 +9,8 @@ use Xanweb\HtmlHelper\Head\Tag as HeadTag;
 /**
  * @see https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs
  */
-class Manager implements ApplicationAwareInterface
+class Manager
 {
-    use ApplicationAwareTrait;
-
     /**
      * @var MetaTag[]
      */
@@ -113,17 +109,18 @@ class Manager implements ApplicationAwareInterface
      *
      * @param callable $register
      */
-    public function setup(callable $register): void
+    public static function setup(callable $register): void
     {
-        $this->app['director']->addListener('on_header_required_ready', function (GenericEvent $evt) use ($register) {
-            $register($this);
+        \app('director')->addListener('on_header_required_ready', function (GenericEvent $evt) use ($register) {
+            $manager = new Manager();
+            $register($manager);
 
-            if ($this->metaTags !== []) {
-                $evt->setArgument('metaTags', array_merge($evt->getArgument('metaTags'), $this->metaTags));
+            if ($manager->metaTags !== []) {
+                $evt->setArgument('metaTags', array_merge($evt->getArgument('metaTags'), $manager->metaTags));
             }
 
-            if ($this->linkTags !== []) {
-                $evt->setArgument('linkTags', array_merge($evt->getArgument('linkTags'), $this->linkTags));
+            if ($manager->linkTags !== []) {
+                $evt->setArgument('linkTags', array_merge($evt->getArgument('linkTags'), $manager->linkTags));
             }
         });
     }
