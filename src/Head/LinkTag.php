@@ -12,7 +12,7 @@ class LinkTag extends HtmlObjectTag implements Tag
     protected $element = 'link';
 
     /**
-     * Whether the element is self closing.
+     * Whether the element is self-closing.
      *
      * @var bool
      */

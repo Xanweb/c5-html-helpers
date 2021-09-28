@@ -9,8 +9,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 use Xanweb\HtmlHelper\Head\Tag as HeadTag;
 
 /**
- * WORK IN PROGRESS
- * @internal
+ * @see https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs
  */
 class Manager implements ApplicationAwareInterface
 {
@@ -19,109 +18,79 @@ class Manager implements ApplicationAwareInterface
     /**
      * @var MetaTag[]
      */
-    protected $metaTags = [];
+    protected $metaTags;
 
     /**
      * @var LinkTag[]
      */
     protected $linkTags;
 
+    public function __construct()
+    {
+        $this->metaTags = [];
+        $this->linkTags = [];
+    }
+
     /**
-     * Register Base Favicon
+     * Register favicon.ico for legacy browsers.
+     * It's highly recommended being placed under webroot https://example.com/favicon.ico.
+     * Some tools, like RSS readers, just request /favicon.ico from the server and don’t bother looking elsewhere.
      *
-     * @param string $favIconURL relative favicon path (*.ico)
+     * @param string $favIconURL relative favicon path (usually favicon.ico with 32×32 of size)
      *
      * @return Manager
      */
-    public function registerBaseFavicon(string $favIconURL): self
+    public function registerIcoFavicon(string $favIconURL): self
     {
-        $this->registerHeadTag(new FaviconLinkTag('shortcut icon', 'image/x-icon', $favIconURL), 'shortcut icon');
-        $this->registerHeadTag(new FaviconLinkTag('icon' , 'image/x-icon', $favIconURL), 'icon');
+        // We need size="any" for <link> to .ico file
+        // to fix [Chrome bug](https://twitter.com/subzey/status/1417099064949235712) of choosing ICO file over SVG.
+        $this->registerHeadTag(new FaviconLinkTag('icon' , 'image/x-icon', $favIconURL, 'any'), 'icon');
 
         return $this;
     }
 
     /**
-     * Register Favicon
+     * Register a single SVG icon with light/dark version for modern browsers
+     * The SVG can contain media queries like @.media (prefers-color-scheme: dark).
+     * This will allow you to toggle the same icon between light and dark system themes.
      *
-     * @param string $favIconURL relative favicon path (*.png)
-     * @param string $sizes (32x32, 16x16, etc)
+     * @param string $svgFilePath relative favicon path (*.svg)
+     *
+     * @see https://blog.tomayac.com/2019/09/21/prefers-color-scheme-in-svg-favicons-for-dark-mode-icons/
      *
      * @return Manager
      */
-    public function registerFavicon(string $favIconURL, string $sizes): self
+    public function registerSVGFavicon(string $svgFilePath): self
     {
-        return $this->registerHeadTag(new FaviconLinkTag('icon', 'image/png', $favIconURL, $sizes), "icon-$sizes");
+        return $this->registerHeadTag(new FaviconLinkTag('icon', 'image/svg+xml', $svgFilePath), 'icon-svg');
     }
 
     /**
      * Register Apple Touch Icon
      *
-     * @param string $appleIconURL relative path (*.png)
-     * @param string|null $sizes (32x32, 16x16, etc)
+     * @param string $appleIconURL relative path (Type: PNG & Size: 180×180)
      *
      * @return Manager
      */
-    public function registerAppleTouchIcon(string $appleIconURL, ?string $sizes = null): self
+    public function registerAppleTouchIcon(string $appleIconURL): self
     {
-        $key = $sizes ? "apple-touch-icon-$sizes" : 'apple-touch-icon';
-        return $this->registerHeadTag(new FaviconLinkTag('apple-touch-icon', null, $appleIconURL, $sizes), $key);
+        return $this->registerHeadTag(new FaviconLinkTag('apple-touch-icon', null, $appleIconURL), 'apple-touch-icon');
     }
 
     /**
-     * Register PreComposed Apple Touch Icon
-     *
-     * @param string $appleIconURL relative path (*.png)
-     * @param string|null $sizes (32x32, 16x16, etc)
-     *
-     * @return Manager
-     */
-    public function registerPreComposedAppleTouchIcon(string $appleIconURL, ?string $sizes = null): self
-    {
-        $key = $sizes ? "apple-touch-icon-precomposed-$sizes" : 'apple-touch-icon-precomposed';
-        return $this->registerHeadTag(new FaviconLinkTag('apple-touch-icon-precomposed', null, $appleIconURL, $sizes), $key);
-    }
-
-    /**
-     * Register Modern Windows Icon Config.
-     *
-     * @param string $xmlFile XML Config File
-     *
-     * @return Manager
-     */
-    public function registerMsTileXmlConfig(string $xmlFile): self
-    {
-        $site = $this->app['site']->getSite();
-        $siteName = ($site !== null) ? tc('SiteName', $site->getSiteName()) : '';
-        $this->registerHeadTag(new MetaTag('msapplication-config', $xmlFile), 'msapplication-config');
-        $this->registerHeadTag(new MetaTag('application-name', $siteName), 'msapplication-config');
-
-        return $this;
-    }
-
-    /**
-     * Register Manifest File.
+     * Register Web app manifest with 192×192 and 512×512 PNG icons for Android devices.
      * @see https://developers.google.com/web/fundamentals/web-app-manifest
      *
-     * @param string $manifestFilePath
+     * @param string $manifestFilePath path to .webmanifest file
      *
      * @return Manager
      */
     public function registerManifestFile(string $manifestFilePath): self
     {
-        return $this->registerHeadTag(new FaviconLinkTag('manifest', null, $manifestFilePath), 'manifest');
-    }
+        $tag = new FaviconLinkTag('manifest', null, $manifestFilePath);
+        $tag->setAttribute('crossorigin', 'use-credentials');
 
-    /**
-     * Set Browser Toolbar Color (<meta name="theme-color">)
-     *
-     * @param string $color
-     *
-     * @return Manager
-     */
-    public function registerBrowserToolbarColor(string $color): self
-    {
-        return $this->registerHeadTag(new MetaTag('theme-color', $color), 'browserToolbarColor');
+        return $this->registerHeadTag($tag, 'manifest');
     }
 
     public function registerHeadTag(HeadTag $headerTag, string $key = ''): self
@@ -149,14 +118,12 @@ class Manager implements ApplicationAwareInterface
         $this->app['director']->addListener('on_header_required_ready', function (GenericEvent $evt) use ($register) {
             $register($this);
 
-            $metaTags = $this->metaTags;
-            $linkTags = $this->linkTags;
-            if (!empty($metaTags)) {
-                $evt->setArgument('metaTags', array_merge($evt->getArgument('metaTags'), $metaTags));
+            if ($this->metaTags !== []) {
+                $evt->setArgument('metaTags', array_merge($evt->getArgument('metaTags'), $this->metaTags));
             }
 
-            if (!empty($linkTags)) {
-                $evt->setArgument('linkTags', array_merge($evt->getArgument('linkTags'), $linkTags));
+            if ($this->linkTags !== []) {
+                $evt->setArgument('linkTags', array_merge($evt->getArgument('linkTags'), $this->linkTags));
             }
         });
     }
