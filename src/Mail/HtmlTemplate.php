@@ -11,7 +11,7 @@ class HtmlTemplate
     /**
      * @var string
      */
-    private $filePath;
+    private string $filePath;
 
     /**
      * HtmlTemplate Construct.

@@ -4,7 +4,7 @@ namespace Xanweb\C5\HtmlHelper\Head;
 
 use Illuminate\Support\Str;
 use Symfony\Component\EventDispatcher\GenericEvent;
-use Xanweb\HtmlHelper\Head\Tag as HeadTag;
+use Xanweb\C5\HtmlHelper\Head\Tag as HeadTag;
 
 /**
  * @see https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs
@@ -14,12 +14,12 @@ class Manager
     /**
      * @var MetaTag[]
      */
-    protected $metaTags;
+    protected array $metaTags;
 
     /**
      * @var LinkTag[]
      */
-    protected $linkTags;
+    protected array $linkTags;
 
     public function __construct()
     {
@@ -92,7 +92,7 @@ class Manager
     public function registerHeadTag(HeadTag $headerTag, string $key = ''): self
     {
         if (empty($key)) {
-            $key = Str::quickRandom(8);
+            $key = Str::random(8);
         }
 
         if ($headerTag instanceof MetaTag) {

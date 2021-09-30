@@ -11,7 +11,7 @@ class IosTogglerWidget
     /**
      * @var Form
      */
-    protected $form;
+    protected Form $form;
 
     public function __construct(Form $form)
     {

@@ -20,17 +20,17 @@ class HtmlBuilder
      *
      * @var UrlGenerator
      */
-    protected $url;
+    protected UrlGenerator $url;
 
     /**
      * @var View
      */
-    protected $view;
+    protected View $view;
 
     /**
      * @var string|null
      */
-    protected $fallbackImage;
+    protected ?string $fallbackImage;
 
     /**
      * Create a new HTML builder instance.
@@ -118,7 +118,7 @@ class HtmlBuilder
     }
 
     /**
-     * Generate a HTML link to a controller action.
+     * Generate an HTML link to a controller action.
      *
      * @param string $action
      * @param string|null $title
@@ -277,7 +277,7 @@ class HtmlBuilder
 
         $children = [];
         // Essentially we will just spin through the list and build the list of the HTML
-        // elements from the array. We will also handled nested lists in case that is
+        // elements from the array. We will also handle nested lists in case that is
         // present in the array. Then we will build out the final listing elements.
         foreach ($list as $value) {
             $children[] = $this->listingElement($type, $value);

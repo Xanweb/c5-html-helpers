@@ -61,7 +61,7 @@ abstract class LinkType
     /**
      * Get list of link types.
      *
-     * @return array<string, string>
+     * @return array<int, string>
      */
     public static function getList(): array
     {
