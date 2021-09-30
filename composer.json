@@ -1,30 +1,30 @@
 {
   "name": "xanweb/c5-html-helpers",
-  "description": "Concrete5 HTML Helpers",
+  "description": "ConcreteCMS HTML Helpers",
   "keywords": [
-    "concrete5",
-    "concrete5-v8",
-    "concrete5-library"
+    "concrete-cms",
+    "concrete-cms-v9",
+    "concrete-cms-library"
   ],
   "type": "library",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.4",
     "xanweb/c5-common": "^1.0",
     "xanweb/c5-ext-asset": "^1.0"
   },
   "autoload": {
     "psr-4": {
-      "Xanweb\\HtmlHelper\\": "src/"
+      "Xanweb\\C5\\HtmlHelper\\": "src/"
     }
   },
   "extra": {
     "branch-alias": {
-      "dev-develop": "1.x-dev"
+      "dev-develop": "2.x-dev"
     },
     "concrete5": {
       "providers": [
-        "Xanweb\\HtmlHelper\\ServiceProvider"
+        "Xanweb\\C5\\HtmlHelper\\ServiceProvider"
       ]
     }
   },

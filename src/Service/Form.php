@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanweb\HtmlHelper\Service;
+namespace Xanweb\C5\HtmlHelper\Service;
 
 use Concrete\Core\Form\Service\Form as CoreForm;
 use HtmlObject\Element;

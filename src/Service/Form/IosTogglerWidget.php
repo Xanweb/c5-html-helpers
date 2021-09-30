@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanweb\HtmlHelper\Service\Form;
+namespace Xanweb\C5\HtmlHelper\Service\Form;
 
 use Concrete\Core\View\View;
 use Concrete\Core\Form\Service\Form;

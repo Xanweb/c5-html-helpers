@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanweb\HtmlHelper\Head;
+namespace Xanweb\C5\HtmlHelper\Head;
 
 use HtmlObject\Traits\Tag as HtmlObjectTag;
 

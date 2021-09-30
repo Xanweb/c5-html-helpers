@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanweb\HtmlHelper\Head;
+namespace Xanweb\C5\HtmlHelper\Head;
 
 use Illuminate\Support\Str;
 use Symfony\Component\EventDispatcher\GenericEvent;

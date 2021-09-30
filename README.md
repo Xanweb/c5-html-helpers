@@ -1,4 +1,4 @@
-# Concrete5 HTML Helpers
+# ConcreteCMS HTML Helpers
 
 ## Installation
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanweb\HtmlHelper\Form;
+namespace Xanweb\C5\HtmlHelper\Form;
 
 abstract class LinkType
 {
