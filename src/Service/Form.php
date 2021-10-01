@@ -10,9 +10,6 @@ class Form extends CoreForm
     /**
      * Creates a label tag.
      *
-     * Supports Bootstrap 4 and 5.
-     * Supports Fontawesome 4 and 5.
-     *
      * @param string $forFieldID the id of the associated element
      * @param string $innerHTML the inner html of the label
      * @param array $miscFields additional fields appended to the element (a hash array of attributes name => value), possibly including 'class'
@@ -42,7 +39,7 @@ class Form extends CoreForm
         $labelHtml = parent::label($forFieldID, $innerHTML, $miscFields);
 
         if ($required) {
-            $labelHtml .= ' <div class="float-right"><span class="text-muted small">' . t('Required') . '</span></div>';
+            $labelHtml .= ' <div class="float-end"><span class="text-muted small">' . t('Required') . '</span></div>';
         }
 
         return $labelHtml;
