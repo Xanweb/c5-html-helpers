@@ -1,6 +1,6 @@
 <?php
 
-namespace Xanweb\HtmlHelper\Mail;
+namespace Xanweb\C5\HtmlHelper\Mail;
 
 use Concrete\Core\Filesystem\FileLocator;
 use Concrete\Core\Localization\Localization;
